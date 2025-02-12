@@ -1,11 +1,11 @@
 import CssBaseline from '@mui/material/CssBaseline';
 import Stack from '@mui/material/Stack';
-import AppTheme from "../../components/shared-theme/AppTheme";
-import ColorModeSelect from "../../components/shared-theme/ColorModeSelect";
-import SignInCard from "../../components/sign-in-side/SignInCard";
-import Content from "../../components/sign-in-side/Content";
+import AppTheme from '../../components/shared-theme/AppTheme';
+import ColorModeSelect from '../../components/shared-theme/ColorModeSelect';
+import SignInCard from '../../components/sign-in-side/components/SignInCard';
+import Content from '../../components/sign-in-side/components/Content';
 
-const Login = (props: { disableCustomTheme?: boolean }) => {
+export default function Login(props: { disableCustomTheme?: boolean }) {
     return (
         <AppTheme {...props}>
             <CssBaseline enableColorScheme />
@@ -63,6 +63,4 @@ const Login = (props: { disableCustomTheme?: boolean }) => {
             </Stack>
         </AppTheme>
     );
-};
-
-export default Login;
+}

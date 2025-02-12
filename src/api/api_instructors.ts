@@ -24,18 +24,18 @@ export const getInstructorById = async (id: number) => {
 
 // Create a new instructor
 export const createInstructor = async (data: Instructors) => {
-    const response = await apiClient.post("/instructor", data);
+    const response = await apiClient.post("/api/instructor", data);
     return response.data;
 };
 
 // Update an instructor
 export const updateInstructor = async (id: number, data: Instructors) => {
-    const response = await apiClient.put(`/instructor/${id}`, data);
+    const response = await apiClient.put(`/api/instructor/${id}`, data);
     return response.data;
 };
 
 // Delete an instructor
 export const deleteInstructor = async (id: number) => {
-    const response = await apiClient.delete(`/instructor/${id}`);
+    const response = await apiClient.delete(`/api/instructor/${id}`);
     return response.data;
 };

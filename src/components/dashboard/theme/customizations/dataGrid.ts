@@ -1,6 +1,6 @@
 import { paperClasses } from '@mui/material/Paper';
 import { alpha, Theme } from '@mui/material/styles';
-import type { DataGridProComponents } from '@mui/x-data-grid/themeAugmentation';
+import type { DataGridProComponents } from '@mui/x-data-grid-pro/themeAugmentation';
 import { menuItemClasses } from '@mui/material/MenuItem';
 import { listItemIconClasses } from '@mui/material/ListItemIcon';
 import { iconButtonClasses } from '@mui/material/IconButton';

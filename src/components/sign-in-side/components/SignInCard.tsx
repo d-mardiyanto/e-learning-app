@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
@@ -12,9 +12,9 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from './ForgotPassword';
 import { SitemarkIcon } from './CustomIcons';
-import { useAuth } from '../../context/AuthContext';
-import { login } from '../../api/api_auth';
+import { login } from '../../../api/api_auth';
 import { useNavigate } from 'react-router-dom';
+
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -35,15 +35,15 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 export default function SignInCard() {
+  const [emailError, setEmailError] = React.useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
+  const [passwordError, setPasswordError] = React.useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
+  const [open, setOpen] = React.useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = useState('');
-  const [passwordError, setPasswordError] = useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-  const [open, setOpen] = useState(false);
-  const { login: setAuth } = useAuth();
-  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const navigate = useNavigate(); // React Router navigation
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -53,14 +53,20 @@ export default function SignInCard() {
     setOpen(false);
   };
 
-  const handleSubmit = async (e:any) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    if (emailError || passwordError) {
+      return;
+    }
     try {
-      const data = await login(email, password);
-      setAuth(data.token);
-      navigate("/admin-panel");
-    } catch (error) {
-      console.error("Login failed", error);
+      const response = await login(email, password);
+      if (response.token) {
+        navigate("/admin-panel"); // Redirect to admin panel
+      }
+      console.log(response);
+      
+    } catch (err) {
+      setError("Login failed. Please check your credentials.");
+      console.log(err);
     }
   };
 
@@ -105,7 +111,7 @@ export default function SignInCard() {
       </Typography>
       <Box
         component="form"
-        onSubmit={handleSubmit}
+        method="POST"
         noValidate
         sx={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 2 }}
       >
@@ -115,7 +121,7 @@ export default function SignInCard() {
             error={emailError}
             helperText={emailErrorMessage}
             value={email}
-            onChange={(e) => setEmail(e.target.value)} 
+            onChange={(e) => setEmail(e.target.value)}
             id="email"
             type="email"
             name="email"
@@ -145,7 +151,7 @@ export default function SignInCard() {
             error={passwordError}
             helperText={passwordErrorMessage}
             value={password}
-            onChange={(e) => setPassword(e.target.value)} 
+            onChange={(e) => setPassword(e.target.value)}
             name="password"
             placeholder="••••••"
             type="password"
@@ -163,7 +169,10 @@ export default function SignInCard() {
           label="Remember me"
         />
         <ForgotPassword open={open} handleClose={handleClose} />
-        <Button type="submit" fullWidth variant="contained" onClick={validateInputs}>
+        <Typography sx={{ textAlign: 'center' }}>
+          {error && <p className="text-red-500">{error}</p>}
+        </Typography>
+        <Button type="button" fullWidth variant="contained" onClick={handleSubmit}>
           Sign in
         </Button>
         <Typography sx={{ textAlign: 'center' }}>
