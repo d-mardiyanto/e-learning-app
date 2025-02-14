@@ -13,8 +13,8 @@ export const getProgramStudy = async (): Promise<ProgramName[]> => {
 };
 
 // Get a single ProgramStudy by ID
-export const getProgramStudyById = async (id: number) => {
-    const response = await apiClient.get<{programname: ProgramName[] }>(`/api/prody/${id}`);
+export const getProgramStudyById = async (id: number): Promise<ProgramName> => {
+    const response = await apiClient.get<{programname: ProgramName }>(`/api/prody/${id}`);
     return response.data.programname;
 };
 

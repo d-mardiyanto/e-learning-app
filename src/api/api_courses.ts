@@ -10,14 +10,14 @@ interface Courses {
     courses_rating: number;
 }
 // Get all Coursess
-export const getCourses = async () => {
-    const response = await apiClient.get("/api/courses/show");
+export const getCourses = async (): Promise<Courses[]> => {
+    const response = await apiClient.get<{ courses: Courses[] }>("/api/courses/show");
     return response.data.courses;
 };
 
 // Get a single Courses by ID
-export const getCoursesById = async (id: number) => {
-    const response = await apiClient.get(`/api/courses/${id}`);
+export const getCoursesById = async (id: number): Promise<Courses> => {
+    const response = await apiClient.get<{ courses: Courses }>(`/api/courses/${id}`);
     return response.data.courses;
 };
 
