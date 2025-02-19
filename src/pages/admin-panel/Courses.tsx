@@ -53,6 +53,7 @@ export default function Courses() {
     );
 
     const handlePageChange = (e: React.ChangeEvent<unknown>, value: number) => {
+        e.preventDefault();
         setCurrentPage(value);
     };
 

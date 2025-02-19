@@ -50,7 +50,8 @@ const StudentsPage = () => {
         currentPage * itemsPerPage
     );
 
-    const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    const handlePageChange = (e: React.ChangeEvent<unknown>, value: number) => {
+        e.preventDefault()
         setCurrentPage(value);
     };
 

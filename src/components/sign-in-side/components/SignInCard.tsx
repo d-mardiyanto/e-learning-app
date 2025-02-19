@@ -54,9 +54,7 @@ export default function SignInCard() {
   };
 
   const handleSubmit = async () => {
-    if (emailError || passwordError) {
-      return;
-    }
+    validateInputs();
     try {
       const response = await login(email, password);
       if (response.token) {
