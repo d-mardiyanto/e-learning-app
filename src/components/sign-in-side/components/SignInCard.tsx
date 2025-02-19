@@ -53,7 +53,8 @@ export default function SignInCard() {
     setOpen(false);
   };
 
-  const handleSubmit = async () => {
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (emailError || passwordError) {
       return;
     }
@@ -68,33 +69,6 @@ export default function SignInCard() {
       setError("Login failed. Please check your credentials.");
       console.log(err);
     }
-  };
-
-  const validateInputs = () => {
-    const email = document.getElementById('email') as HTMLInputElement;
-    const password = document.getElementById('password') as HTMLInputElement;
-
-    let isValid = true;
-
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage('');
-    }
-
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage('');
-    }
-
-    return isValid;
   };
 
   return (
@@ -112,6 +86,7 @@ export default function SignInCard() {
       <Box
         component="form"
         method="POST"
+        onSubmit={handleLogin}
         noValidate
         sx={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 2 }}
       >
@@ -172,7 +147,7 @@ export default function SignInCard() {
         <Typography sx={{ textAlign: 'center' }}>
           {error && <p className="text-red-500">{error}</p>}
         </Typography>
-        <Button type="button" fullWidth variant="contained" onClick={handleSubmit}>
+        <Button type="submit" fullWidth variant="contained">
           Sign in
         </Button>
         <Typography sx={{ textAlign: 'center' }}>
